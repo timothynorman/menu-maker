@@ -1,0 +1,2 @@
+# Menu Maker
+Planning a weekly list of meal ideas sucks. This app takes the guesswork out of it and generates a whole week's worth of supper ideas at the click of a button! It will select meal ideas for the next seven days taking into consideration when you last had that dish, if you need a "fast" meal, or if the weather is good to BBQ. It also tries to add variety to the week by not giving you too many similar ideas at once (As great as Italian food is, you don't want pasta _every_ day of the week.)

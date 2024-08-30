@@ -1,0 +1,10 @@
+DROP TABLE IF EXISTS food;
+CREATE TABLE food (
+	id SERIAL PRIMARY KEY,
+	name VARCHAR(255),
+	type VARCHAR(30),
+	last_used DATE,
+	ingredients INTEGER,
+	bbq BOOLEAN,
+	theme VARCHAR(30)
+);
