@@ -1,10 +1,24 @@
+USE menu_maker;
 DROP TABLE IF EXISTS food;
 CREATE TABLE food (
-	id SERIAL PRIMARY KEY,
+	id int NOT NULL AUTO_INCREMENT,
 	name VARCHAR(255),
 	type VARCHAR(30),
 	last_used DATE,
 	ingredients INTEGER,
 	bbq BOOLEAN,
-	theme VARCHAR(30)
+	theme VARCHAR(30),
+    PRIMARY KEY (id)
 );
+
+-- Seed some starting data to test. 
+INSERT INTO food (name, type, bbq, theme)
+VALUES 
+	('Hamburgers', 'main', true, 'red meat'),
+    ('Spaghetti', 'meal', false, 'pasta'),
+    ('Orzo Salad', 'side', false, 'salad'),
+    ('Salmon', 'main', false, 'fish'),
+    ('Caesar Salad', 'side', false, 'salad'),
+    ('Porto Rico Potatoes', 'starch', false, 'potato'),
+    ('Green Beans', 'veg', false, 'salad')
+;
