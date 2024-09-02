@@ -20,5 +20,17 @@ VALUES
     ('Salmon', 'main', false, 'fish'),
     ('Caesar Salad', 'side', false, 'salad'),
     ('Porto Rico Potatoes', 'starch', false, 'potato'),
-    ('Green Beans', 'veg', false, 'salad')
+    ('Green Beans', 'veg', false, 'salad'),
+    ('Carrot Coins', 'veg', false, 'salad'),
+    ('Corn on the Cob', 'veg', true, 'salad'),
+    ('Sugar Snap Peas', 'veg', false, 'salad'), 
+    ('Peppers', 'veg', false, 'salad'),
+    ('Indian Meal Kit', 'meal', false, 'chicken'), 
+    ('Chicken Thighs', 'main', true, 'chicken'), 
+    ('Home Made Pizza', 'meal', false, 'pasta'),
+    ('Hot Dogs', 'main', true, 'red meat'),
+    ('Roast Potatoes', 'starch', false, 'potato'),
+    ('Fries', 'starch', false, 'potato'),
+    ('Tater Tots', 'starch', false, 'potato'),
+    ('Rice', 'starch', false, 'pasta')
 ;
