@@ -33,9 +33,16 @@ func main() {
 
 	ConnectToDatabase(cfg)
 
-	test, err := loadOneFoodByName("spaghetti")
-	fmt.Println(test)
-	fmt.Println(err)
+	// test, _ := loadOneFoodByName("spaghetti")
+	// fmt.Println(test)
+
+	// test2, _ := loadOneFoodById(7)
+	// fmt.Println(test2)
+
+	// fmt.Println(test2.Name)
+
+	mealTest := makeOneMeal()
+	fmt.Println(mealTest)
 
 }
 
