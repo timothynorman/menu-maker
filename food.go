@@ -62,74 +62,55 @@ func loadOneFoodById(id int) (FoodItem, error) {
 }
 
 func makeOneMeal() []FoodItem {
-	var completeMeal []FoodItem
+	var (
+		completeMeal []FoodItem
+		main         FoodItem
+		side         FoodItem
+		starch       FoodItem
+	)
 
-	main, _ := getMealOrMain()
-	side, _ := getSideOrVeg()
+	main, _ = getMealOrMain()
+	fmt.Printf("Added %v", main.Name)
 
-	completeMeal = append(completeMeal, main, side)
-	fmt.Printf("Added %v and %v to the meal.\n", main.Name, side.Name)
+	if main.Type == "main" {
+		side, _ = getSideOrVeg()
+		fmt.Printf(", and %v", side.Name)
 
-	if side.Type == "veg" {
-		starch, _ := getStarch()
-		completeMeal = append(completeMeal, starch)
-		fmt.Printf("Added %v to the meal.\n", starch.Name)
+		if side.Type == "veg" {
+			starch, _ = getStarch()
+			completeMeal = append(completeMeal, starch)
+			fmt.Printf(", and %v", starch.Name)
+		}
 	}
+
+	fmt.Printf(" to the meal.\n")
+	completeMeal = append(completeMeal, main, side, starch)
 
 	return completeMeal
 }
 
 // getMealOrMain returns a single random FoodItem that is either a 'Meal' or 'Main' type.
 func getMealOrMain() (FoodItem, error) {
-	var food FoodItem
-
 	row := db.QueryRow("SELECT * FROM food WHERE type='meal' OR type='main' ORDER BY RAND() LIMIT 1")
-	if err := row.Scan(
-		&food.Id,
-		&food.Name,
-		&food.Type,
-		&food.LastUsed,
-		&food.Ingredients,
-		&food.Bbq,
-		&food.Theme,
-	); err != nil {
-		if err == sql.ErrNoRows {
-			return food, fmt.Errorf("no such food")
-		}
-		return food, fmt.Errorf("getMealOrMain: %v", err)
-	}
-
-	return food, nil
+	return scanQuery(row)
 }
 
 // getSideOrBeg returns a single random FoodItem that is either a 'Side' or 'Veg' type.
 func getSideOrVeg() (FoodItem, error) {
-	var food FoodItem
-
 	row := db.QueryRow("SELECT * FROM food WHERE type='side' OR type='veg' ORDER BY RAND() LIMIT 1")
-	if err := row.Scan(
-		&food.Id,
-		&food.Name,
-		&food.Type,
-		&food.LastUsed,
-		&food.Ingredients,
-		&food.Bbq,
-		&food.Theme,
-	); err != nil {
-		if err == sql.ErrNoRows {
-			return food, fmt.Errorf("no such food")
-		}
-		return food, fmt.Errorf("getSideOrVeg: %v", err)
-	}
-
-	return food, nil
+	return scanQuery(row)
 }
 
 // getStarch returns a single random FoodItem that is a 'Starch' type.
 func getStarch() (FoodItem, error) {
+	row := db.QueryRow("SELECT * FROM food WHERE type='starch' ORDER BY RAND() LIMIT 1")
+	return scanQuery(row)
+}
+
+// scanQuery scans a row of FoodItem and assigns values to the struct.
+func scanQuery(row *sql.Row) (FoodItem, error) {
 	var food FoodItem
 
-	row := db.QueryRow("SELECT * FROM food WHERE type='starch' ORDER BY RAND() LIMIT 1")
 	if err := row.Scan(
 		&food.Id,
 		&food.Name,
@@ -142,7 +123,7 @@ func getStarch() (FoodItem, error) {
 		if err == sql.ErrNoRows {
 			return food, fmt.Errorf("no such food")
 		}
-		return food, fmt.Errorf("getStarch: %v", err)
+		return food, fmt.Errorf("scanQuery: %v", err)
 	}
 
 	return food, nil
