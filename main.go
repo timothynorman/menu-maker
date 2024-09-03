@@ -36,27 +36,29 @@ func main() {
 	ConnectToDatabase(cfg)
 
 	// Start Go webserver
+	fmt.Println("Starting Go webserver.")
 
-	h1 := func(w http.ResponseWriter, r *http.Request) {
-		// io.WriteString(w, fmt.Sprint(makeOneMeal()))
-
-		// this creates a tempalte based on what's written in 'index.html'
-		tmpl := template.Must(template.ParseFiles("index.html"))
-
-		Foods := makeOneMeal()
-
-		TestValues := map[string][]FoodItem{
-			"Foods": Foods,
-		}
-		tmpl.Execute(w, TestValues)
+	defaultHandler := func(w http.ResponseWriter, r *http.Request) {
+		http.ServeFile(w, r, "index.html")
 	}
-	http.HandleFunc("/", h1)
+
+	http.HandleFunc("/", defaultHandler)
+	http.HandleFunc("/menu", renderMenu)
 
 	log.Fatal(http.ListenAndServe(":8000", nil))
+}
 
-	// mealTest := makeOneMeal()
-	// fmt.Println(mealTest)
+func renderMenu(w http.ResponseWriter, r *http.Request) {
+	menu := createMenu(7)
 
+	tmplFile := "meal.tmpl"
+	t, err := template.New(tmplFile).ParseFiles(tmplFile)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	t.Execute(w, menu)
 }
 
 func ConnectToDatabase(cfg *mysql.Config) error {

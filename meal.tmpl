@@ -1,0 +1,10 @@
+{{range $i, $meal := .}}
+    <div>
+        <h3>Meal {{$i}}</h3>
+        <ul>
+            {{range $meal}}
+                <li>{{.Name}} </li>
+            {{end}}
+        </ul>
+    </div>
+{{end}}

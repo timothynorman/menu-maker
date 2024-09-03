@@ -4,13 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>What Should We Eat Duckie?</title>
+    <script src="https://unpkg.com/htmx.org@2.0.2" integrity="sha384-Y7hw+L/jvKeWIRRkqWYfPcvVxHzVzn5REgzbawhxAuQGwX1XWe70vji+VSeHOThJ" crossorigin="anonymous"></script>
 </head>
 <body>
-    <h1>Hard coded values</h1>
-    <ul>
-        {{ range .Foods }}
-        <li>{{ .Name }}</li>
-        {{ end }}
-    </ul>
+    <h1>Menu</h1>
+    <button hx-get="/menu" hx-target="#menu">Make Menus</button>
+    <div id="menu">
+        <!-- load menu here -->
+    </div>
 </body>
 </html>

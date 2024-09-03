@@ -5,8 +5,6 @@ import (
 	"fmt"
 )
 
-var menu [][]FoodItem
-
 type FoodItem struct {
 	Id          int
 	Name        string
@@ -88,6 +86,16 @@ func makeOneMeal() []FoodItem {
 	fmt.Printf(" to the meal.\n")
 
 	return completeMeal
+}
+
+// createMenu makes meals up to the number of 'days'
+func createMenu(days int) [][]FoodItem {
+	var menu [][]FoodItem
+
+	for i := 0; i < days; i++ {
+		menu = append(menu, makeOneMeal())
+	}
+	return menu
 }
 
 // getMealOrMain returns a single random FoodItem that is either a 'Meal' or 'Main' type.
