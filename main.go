@@ -3,7 +3,9 @@ package main
 import (
 	"database/sql"
 	"fmt"
+	"html/template"
 	"log"
+	"net/http"
 	"os"
 
 	"github.com/go-sql-driver/mysql"
@@ -33,16 +35,27 @@ func main() {
 
 	ConnectToDatabase(cfg)
 
-	// test, _ := loadOneFoodByName("spaghetti")
-	// fmt.Println(test)
+	// Start Go webserver
 
-	// test2, _ := loadOneFoodById(7)
-	// fmt.Println(test2)
+	h1 := func(w http.ResponseWriter, r *http.Request) {
+		// io.WriteString(w, fmt.Sprint(makeOneMeal()))
 
-	// fmt.Println(test2.Name)
+		// this creates a tempalte based on what's written in 'index.html'
+		tmpl := template.Must(template.ParseFiles("index.html"))
 
-	mealTest := makeOneMeal()
-	fmt.Println(mealTest)
+		Foods := makeOneMeal()
+
+		TestValues := map[string][]FoodItem{
+			"Foods": Foods,
+		}
+		tmpl.Execute(w, TestValues)
+	}
+	http.HandleFunc("/", h1)
+
+	log.Fatal(http.ListenAndServe(":8000", nil))
+
+	// mealTest := makeOneMeal()
+	// fmt.Println(mealTest)
 
 }
 

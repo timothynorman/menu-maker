@@ -71,19 +71,21 @@ func makeOneMeal() []FoodItem {
 
 	main, _ = getMealOrMain()
 	fmt.Printf("Added %v", main.Name)
+	completeMeal = append(completeMeal, main)
 
 	if main.Type == "main" {
 		side, _ = getSideOrVeg()
 		fmt.Printf(", and %v", side.Name)
+		completeMeal = append(completeMeal, side)
 
 		if side.Type == "veg" {
 			starch, _ = getStarch()
 			fmt.Printf(", and %v", starch.Name)
+			completeMeal = append(completeMeal, starch)
 		}
 	}
 
 	fmt.Printf(" to the meal.\n")
-	completeMeal = append(completeMeal, main, side, starch)
 
 	return completeMeal
 }
