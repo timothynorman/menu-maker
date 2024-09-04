@@ -7,6 +7,7 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"strconv"
 
 	"github.com/go-sql-driver/mysql"
 	"github.com/joho/godotenv"
@@ -44,6 +45,7 @@ func main() {
 
 	http.HandleFunc("/", defaultHandler)
 	http.HandleFunc("/menu", renderMenu)
+	http.HandleFunc("/onemeal", updateOneMeal)
 
 	log.Fatal(http.ListenAndServe(":8000", nil))
 }
@@ -51,7 +53,7 @@ func main() {
 func renderMenu(w http.ResponseWriter, r *http.Request) {
 	menu := createMenu(7)
 
-	tmplFile := "meal.tmpl"
+	tmplFile := "menu.tmpl"
 	t, err := template.New(tmplFile).ParseFiles(tmplFile)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
@@ -59,6 +61,37 @@ func renderMenu(w http.ResponseWriter, r *http.Request) {
 	}
 
 	t.Execute(w, menu)
+}
+
+// updateOneMeal contains logic for endpoint to replace a single meal when it's re-roll button is clicked.
+func updateOneMeal(w http.ResponseWriter, r *http.Request) {
+	// get index of meal to be replaced from the menu.
+	// sent by the button click.
+	mealIndexStr := r.URL.Query().Get("mealIndex")
+	mealIndex, err := strconv.Atoi(mealIndexStr)
+	if err != nil || mealIndex < 0 {
+		http.Error(w, "Invalid meal index", http.StatusBadRequest)
+		return
+	}
+
+	// meal.tmpl is slighting different than menu.tmpl - it does not include range logic.
+	tmplFile := "meal.tmpl"
+	t, err := template.New(tmplFile).ParseFiles(tmplFile)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	// need to send the index and the new meal
+	data := struct {
+		Index int
+		Meal  []FoodItem
+	}{
+		Index: mealIndex,
+		Meal:  makeOneMeal(),
+	}
+
+	t.Execute(w, data)
 }
 
 func ConnectToDatabase(cfg *mysql.Config) error {
