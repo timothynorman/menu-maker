@@ -8,14 +8,26 @@
     <script src="https://unpkg.com/htmx.org@2.0.2" integrity="sha384-Y7hw+L/jvKeWIRRkqWYfPcvVxHzVzn5REgzbawhxAuQGwX1XWe70vji+VSeHOThJ" crossorigin="anonymous"></script>
 </head>
 <body>
-    <h1>Menu</h1>
-    <button 
-        hx-get="/menu" 
-        hx-target="#menu"
-        type="button"
-        class="btn btn-primary">Make Menus</button>
-    <div id="menu">
-        <!-- load menu here -->
+    <div
+        id="horizontal-alignment"
+        class="d-flex justify-content-center">
+        
+        <div 
+            id="contents"
+            style="max-width: 20rem;"
+            class="d-flex flex-column align-items-center">
+            <h1>What Should We Eat Duckie? 🦆</h1>
+            <button 
+                hx-get="/menu" 
+                hx-target="#menu"
+                type="button"
+                class="btn btn-primary"
+                style="width: fit-content;">Make Menus</button>
+            
+                <div id="menu">
+                <!-- load menu here -->
+            </div>
+        </div>
     </div>
 </body>
 </html>
