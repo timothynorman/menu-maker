@@ -32,5 +32,20 @@ VALUES
     ('Roast Potatoes', 'starch', false, 'potato'),
     ('Fries', 'starch', false, 'potato'),
     ('Tater Tots', 'starch', false, 'potato'),
-    ('Rice', 'starch', false, 'pasta')
+    ('Rice', 'starch', false, 'pasta'),
+    ('Pork Kabobs', 'main', true, 'red meat'),
+    ('Jambalaya', 'meal', false, 'pasta'),
+    ('Tubes and Cubes', 'meal', false, 'chicken'),
+    ('Pad Grah Pow', 'meal', false, 'asian'),
+    ('Pad Thai', 'meal', false, 'asian'),
+    ('Nachos', 'meal', false, 'fast'),
+    ('Fast Chili', 'meal', false, 'fast'),
+    ('Lazy Lasagna', 'meal', false, 'pasta'),
+    ('Chicken Burger', 'main', false, 'chicken'),
+    ('Steak', 'main', true, 'red meat'),
+    ('Ribs', 'main', true, 'red meat'),
+    ('Bacon Wrapped Scallops', 'main', false, 'fish'), 
+    ('Pick Plate', 'meal', false, 'fast'), 
+    ('Fajias', 'meal', false, 'mexican'),
+    ('Stir Fry', 'meal', false, 'fast')
 ;

@@ -14,6 +14,15 @@ import (
 )
 
 var db *sql.DB
+var daysOfWeek = []string{
+	"Sunday",
+	"Monday",
+	"Tuesday",
+	"Wednesday",
+	"Thursday",
+	"Friday",
+	"Saturday",
+}
 
 const ()
 
@@ -53,6 +62,14 @@ func main() {
 func renderMenu(w http.ResponseWriter, r *http.Request) {
 	menu := createMenu(7)
 
+	data := struct {
+		Menu [][]FoodItem
+		Days []string
+	}{
+		Menu: menu,
+		Days: daysOfWeek,
+	}
+
 	tmplFile := "menu.tmpl"
 	t, err := template.New(tmplFile).ParseFiles(tmplFile)
 	if err != nil {
@@ -60,7 +77,7 @@ func renderMenu(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	t.Execute(w, menu)
+	t.Execute(w, data)
 }
 
 // updateOneMeal contains logic for endpoint to replace a single meal when it's re-roll button is clicked.
@@ -86,9 +103,11 @@ func updateOneMeal(w http.ResponseWriter, r *http.Request) {
 	data := struct {
 		Index int
 		Meal  []FoodItem
+		Day   string
 	}{
 		Index: mealIndex,
 		Meal:  makeOneMeal(),
+		Day:   daysOfWeek[mealIndex],
 	}
 
 	t.Execute(w, data)

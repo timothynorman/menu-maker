@@ -1,12 +1,21 @@
-{{range $i, $meal := .}}
-    <div id="meal-{{$i}}">
-        <h3>Meal {{$i}}</h3>
-        <ul>
-            {{range $meal}}
-                <li>{{.Name}} </li>
-            {{end}}
-        </ul>
+{{range $i, $meal := .Menu}}
+    <div 
+        id="meal-{{$i}}"
+        class="card" style="width: 18rem;">
 
-        <button hx-get="/onemeal?mealIndex={{$i}}" hx-target="#meal-{{$i}}">Re-roll Meal</button>
+        <div class="card-body">
+
+            <h3>{{index $.Days $i}}</h3>
+            <ul>
+                {{range $meal}}
+                    <li>{{.Name}} </li>
+                {{end}}
+            </ul>
+
+            <button 
+                hx-get="/onemeal?mealIndex={{$i}}" 
+                hx-target="#meal-{{$i}}"
+                class="btn btn-primary">Re-roll Meal</button>
+        </div>
     </div>
 {{end}}

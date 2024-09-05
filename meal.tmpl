@@ -1,10 +1,13 @@
-<div>
-    <h3>Meal {{.Index}}</h3>
+<div class="card-body">
+    <h3>{{.Day}}</h3>
     <ul>
         {{range .Meal}}
             <li>{{.Name}} </li>
         {{end}}
     </ul>
 
-    <button hx-get="/onemeal?mealIndex={{.Index}}" hx-target="#meal-{{.Index}}">Re-roll Meal</button>
+    <button 
+        hx-get="/onemeal?mealIndex={{.Index}}" 
+        hx-target="#meal-{{.Index}}"
+        class="btn btn-primary">Re-roll Meal</button>
 </div>
