@@ -24,7 +24,9 @@ var daysOfWeek = []string{
 	"Saturday",
 }
 
-const ()
+const (
+	WEBSERVERPORT string = ":8000"
+)
 
 func main() {
 
@@ -46,7 +48,7 @@ func main() {
 	ConnectToDatabase(cfg)
 
 	// Start Go webserver
-	fmt.Println("Starting Go webserver.")
+	fmt.Println("Starting Go webserver on port", WEBSERVERPORT)
 
 	defaultHandler := func(w http.ResponseWriter, r *http.Request) {
 		http.ServeFile(w, r, "index.html")
@@ -56,7 +58,7 @@ func main() {
 	http.HandleFunc("/menu", renderMenu)
 	http.HandleFunc("/onemeal", updateOneMeal)
 
-	log.Fatal(http.ListenAndServe(":8000", nil))
+	log.Fatal(http.ListenAndServe(WEBSERVERPORT, nil))
 }
 
 func renderMenu(w http.ResponseWriter, r *http.Request) {

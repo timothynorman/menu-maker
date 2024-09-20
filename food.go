@@ -88,14 +88,36 @@ func makeOneMeal() []FoodItem {
 	return completeMeal
 }
 
-// createMenu makes meals up to the number of 'days'
+// createMenu makes unique meals up to the number of 'days'
 func createMenu(days int) [][]FoodItem {
 	var menu [][]FoodItem
 
 	for i := 0; i < days; i++ {
-		menu = append(menu, makeOneMeal())
+
+		continueMeal := true
+		for continueMeal {
+
+			nextMeal := makeOneMeal()
+
+			if !isRepeatedMeal(menu, nextMeal) {
+				menu = append(menu, nextMeal)
+				continueMeal = false
+			}
+
+		}
+
 	}
 	return menu
+}
+
+// isRepeatedMeal chekcs if the meal already exists in the menu.
+func isRepeatedMeal(menu [][]FoodItem, newMeal []FoodItem) bool {
+	for _, meal := range menu {
+		if newMeal[0].Id == meal[0].Id {
+			return true
+		}
+	}
+	return false
 }
 
 // getMealOrMain returns a single random FoodItem that is either a 'Meal' or 'Main' type.
